@@ -118,6 +118,15 @@ function App() {
   const [flash, setFlash] = useState<string | null>(null)
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
 
+  const applySearchTerm = (term: string) => {
+    const nextTerm = term.trim()
+
+    setSearchInput(nextTerm)
+    setActiveSearch(nextTerm)
+    setSelectedArticleNumber(null)
+    setFlash(null)
+  }
+
   const sessionQuery = useQuery({
     queryKey: ['session'],
     queryFn: getSession,
@@ -242,8 +251,7 @@ function App() {
 
     const url = new URL(window.location.href)
     const nextTerm = url.searchParams.get('q')?.trim() ?? ''
-    setSearchInput(nextTerm)
-    setActiveSearch(nextTerm)
+    applySearchTerm(nextTerm)
   }, [isClient])
 
   useEffect(() => {
@@ -254,14 +262,21 @@ function App() {
     const handlePopState = () => {
       const url = new URL(window.location.href)
       const nextTerm = url.searchParams.get('q')?.trim() ?? ''
-      setSearchInput(nextTerm)
-      setActiveSearch(nextTerm)
-      setSelectedArticleNumber(null)
-      setFlash(null)
+      applySearchTerm(nextTerm)
+    }
+
+    const handleChatbotSearch = (event: Event) => {
+      const detail = (event as CustomEvent<{ term?: string }>).detail
+
+      applySearchTerm(detail.term ?? '')
     }
 
     window.addEventListener('popstate', handlePopState)
-    return () => window.removeEventListener('popstate', handlePopState)
+    window.addEventListener('chatbot-search', handleChatbotSearch)
+    return () => {
+      window.removeEventListener('popstate', handlePopState)
+      window.removeEventListener('chatbot-search', handleChatbotSearch)
+    }
   }, [isClient])
 
   useEffect(() => {
@@ -348,10 +363,7 @@ function App() {
                 className="mt-5 flex flex-col gap-3 sm:flex-row"
                 onSubmit={(event) => {
                   event.preventDefault()
-                  const nextTerm = searchInput.trim()
-                  setActiveSearch(nextTerm)
-                  setSelectedArticleNumber(null)
-                  setFlash(null)
+                  applySearchTerm(searchInput)
                 }}
               >
                 <input

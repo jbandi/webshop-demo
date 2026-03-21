@@ -1,4 +1,4 @@
-Welcome to your new TanStack Start app! 
+Welcome to your new TanStack Start app!
 
 # Getting Started
 
@@ -8,6 +8,27 @@ To run this application:
 npm install
 npm run dev
 ```
+
+## Gemini Chatbot Setup
+
+The chatbot uses the Vercel AI SDK with Google Gemini.
+
+For local development, copy `.env.local.example` to `.env.local` and add your
+API key:
+
+```bash
+cp .env.local.example .env.local
+```
+
+```bash
+GOOGLE_GENERATIVE_AI_API_KEY=your_api_key_here
+```
+
+The app also loads values from `.env`, so either file works. Prefer
+`.env.local` for machine-specific secrets.
+
+The AI call is executed server-side via `/api/chat`, while the UI streams the
+assistant response in the browser.
 
 # Building For Production
 
@@ -40,7 +61,6 @@ If you prefer not to use Tailwind CSS:
 
 ## Linting & Formatting
 
-
 This project uses [eslint](https://eslint.org/) and [prettier](https://prettier.io/) for linting and formatting. Eslint is configured using [tanstack/eslint-config](https://tanstack.com/config/latest/docs/eslint). The following scripts are available:
 
 ```bash
@@ -48,8 +68,6 @@ npm run lint
 npm run format
 npm run check
 ```
-
-
 
 ## Routing
 
@@ -68,7 +86,7 @@ Now that you have two routes you can use a `Link` component to navigate between 
 To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
 
 ```tsx
-import { Link } from "@tanstack/react-router";
+import { Link } from '@tanstack/react-router'
 ```
 
 Then anywhere in your JSX you can use it like so:
@@ -136,11 +154,11 @@ const getServerTime = createServerFn({
 // Use in a component
 function MyComponent() {
   const [time, setTime] = useState('')
-  
+
   useEffect(() => {
     getServerTime().then(setTime)
   }, [])
-  
+
   return <div>Server time: {time}</div>
 }
 ```

@@ -14,6 +14,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as ApiSessionRouteImport } from './routes/api/session'
 import { Route as ApiSearchRouteImport } from './routes/api/search'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as ApiCartRouteImport } from './routes/api/cart'
 import { Route as ApiCartItemsRouteImport } from './routes/api/cart/items'
 import { Route as ApiCartCheckoutRouteImport } from './routes/api/cart/checkout'
@@ -43,6 +44,11 @@ const ApiSessionRoute = ApiSessionRouteImport.update({
 const ApiSearchRoute = ApiSearchRouteImport.update({
   id: '/api/search',
   path: '/api/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiCartRoute = ApiCartRouteImport.update({
@@ -76,6 +82,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/api/cart': typeof ApiCartRouteWithChildren
+  '/api/chat': typeof ApiChatRoute
   '/api/search': typeof ApiSearchRoute
   '/api/session': typeof ApiSessionRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -88,6 +95,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/api/cart': typeof ApiCartRouteWithChildren
+  '/api/chat': typeof ApiChatRoute
   '/api/search': typeof ApiSearchRoute
   '/api/session': typeof ApiSessionRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/api/cart': typeof ApiCartRouteWithChildren
+  '/api/chat': typeof ApiChatRoute
   '/api/search': typeof ApiSearchRoute
   '/api/session': typeof ApiSessionRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/api/cart'
+    | '/api/chat'
     | '/api/search'
     | '/api/session'
     | '/demo/tanstack-query'
@@ -127,6 +137,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/api/cart'
+    | '/api/chat'
     | '/api/search'
     | '/api/session'
     | '/demo/tanstack-query'
@@ -139,6 +150,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/api/cart'
+    | '/api/chat'
     | '/api/search'
     | '/api/session'
     | '/demo/tanstack-query'
@@ -152,6 +164,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ApiCartRoute: typeof ApiCartRouteWithChildren
+  ApiChatRoute: typeof ApiChatRoute
   ApiSearchRoute: typeof ApiSearchRoute
   ApiSessionRoute: typeof ApiSessionRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
@@ -193,6 +206,13 @@ declare module '@tanstack/react-router' {
       path: '/api/search'
       fullPath: '/api/search'
       preLoaderRoute: typeof ApiSearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/cart': {
@@ -262,6 +282,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ApiCartRoute: ApiCartRouteWithChildren,
+  ApiChatRoute: ApiChatRoute,
   ApiSearchRoute: ApiSearchRoute,
   ApiSessionRoute: ApiSessionRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
