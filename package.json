@@ -2,9 +2,13 @@
   "name": "webshop-with-ai",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "dev": "vite dev --port 3000",
     "build": "vite build",
+    "start": "node server.js",
     "preview": "vite preview",
     "test": "vitest run",
     "lint": "eslint",
