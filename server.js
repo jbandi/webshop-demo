@@ -71,7 +71,7 @@ const server = createServer(async (req, res) => {
   }
 
   req.on('aborted', () => controller.abort())
-  req.on('close', () => {
+  res.on('close', () => {
     if (!res.writableEnded) {
       controller.abort()
     }
