@@ -8,6 +8,7 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import ChatbotWidget from '../components/ChatbotWidget'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
+import WebMCPProvider from '../components/WebMCPProvider'
 
 import TanStackQueryProvider from '../integrations/tanstack-query/root-provider'
 
@@ -53,6 +54,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
         <TanStackQueryProvider>
+          <WebMCPProvider />
           <Header />
           {children}
           <Footer />

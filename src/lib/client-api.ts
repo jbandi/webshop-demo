@@ -7,6 +7,16 @@ import type {
   SessionUser,
 } from './types'
 
+export class ApiRequestError extends Error {
+  status: number
+
+  constructor(message: string, status: number) {
+    super(message)
+    this.name = 'ApiRequestError'
+    this.status = status
+  }
+}
+
 async function requestJson<T>(input: string, init?: RequestInit): Promise<T> {
   const response = await fetch(input, {
     ...init,
@@ -28,7 +38,7 @@ async function requestJson<T>(input: string, init?: RequestInit): Promise<T> {
       // ignore malformed error payloads
     }
 
-    throw new Error(message)
+    throw new ApiRequestError(message, response.status)
   }
 
   return (await response.json()) as T
